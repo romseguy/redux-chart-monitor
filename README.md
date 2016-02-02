@@ -1,8 +1,10 @@
 Redux DevTools Chart Monitor
 =========================
 
-A chart monitor for [Redux DevTools](https://github.com/gaearon/redux-devtools).  
+A chart monitor for [Redux DevTools](https://github.com/gaearon/redux-devtools).
 It shows a real-time view of the store aka the current state of the app.
+
+:rocket: Now with immutable-js support.
 
 [Demo](http://romseguy.github.io/redux-store-visualizer/) [(Source)](https://github.com/romseguy/redux-store-visualizer)
 
@@ -32,7 +34,7 @@ export default createDevTools(
 
 Then you can render `<DevTools>` to any place inside app or even into a separate popup window.
 
-Alternative, you can use it together with [`DockMonitor`](https://github.com/gaearon/redux-devtools-dock-monitor) to make it dockable.  
+Alternative, you can use it together with [`DockMonitor`](https://github.com/gaearon/redux-devtools-dock-monitor) to make it dockable.
 Consult the [`DockMonitor` README](https://github.com/gaearon/redux-devtools-dock-monitor) for details of this approach.
 
 [Read how to start using Redux DevTools.](https://github.com/gaearon/redux-devtools)

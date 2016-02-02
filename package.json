@@ -21,6 +21,9 @@
     "chart"
   ],
   "author": "romseguy",
+  "contributors": [
+    "Cole Chamberlain <cole.chamberlain@gmail.com> (https://github.com/cchamberlain)"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/romseguy/redux-devtools-chart-monitor/issues"
@@ -49,6 +52,7 @@
     "d3-state-visualizer": "^1.0.2",
     "deepmerge": "^0.2.10",
     "react-pure-render": "^1.0.2",
-    "redux-devtools-themes": "^1.0.0"
+    "redux-devtools-themes": "^1.0.0",
+    "tomutable": "^0.1.3"
   }
 }
