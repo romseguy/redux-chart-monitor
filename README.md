@@ -104,7 +104,9 @@ Consult the [`DockMonitor` README](https://github.com/gaearon/redux-devtools-doc
 Name                  | Description
 -------------         | -------------
 `theme`               | Either a string referring to one of the themes provided by [redux-devtools-themes](https://github.com/gaearon/redux-devtools-themes) (feel free to contribute!) or a custom object of the same format. Optional. By default, set to [`'nicinabox'`](https://github.com/gaearon/redux-devtools-themes/blob/master/src/nicinabox.js).
+`invertTheme`         | Boolean value that will invert the colors of the selected theme. Optional. By default, set to `false`
 `select`              | A function that selects the slice of the state for DevTools to show. For example, `state => state.thePart.iCare.about`. Optional. By default, set to `state => state`.
+`hasImmutables`       | Boolean value that will walk state tree and convert immutable-js objects to normal objects so that they can be displayed. Optional. By default, set to `false`
 
 ### License
 
