@@ -103,11 +103,11 @@ class ChartMonitor extends Component {
     }
 
     if (typeof themes[theme] !== 'undefined') {
-      return invertTheme ? invertColors(themes[theme]) : theme;
+      return invertTheme ? invertColors(themes[theme]) : themes[theme];
     }
 
     console.warn('DevTools theme ' + theme + ' not found, defaulting to nicinabox');
-    return invertTheme ? invertColors(themes.nicinabox) : theme;
+    return invertTheme ? invertColors(themes.nicinabox) : themes.nicinabox;
   }
 
   getChartStyle() {
