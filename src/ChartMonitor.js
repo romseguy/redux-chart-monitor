@@ -3,6 +3,7 @@ import shouldPureComponentUpdate from 'react-pure-render/function';
 import * as themes from 'redux-devtools-themes';
 import { ActionCreators } from 'redux-devtools';
 import deepmerge from 'deepmerge';
+import toMutable from 'tomutable';
 
 import reducer from './reducers';
 import Chart from './Chart';
@@ -18,6 +19,20 @@ const styles = {
     minWidth: 300
   }
 };
+
+function invertColors(theme) {
+  return {
+    ...theme,
+    base00: theme.base07,
+    base01: theme.base06,
+    base02: theme.base05,
+    base03: theme.base04,
+    base04: theme.base03,
+    base05: theme.base02,
+    base06: theme.base01,
+    base07: theme.base00
+  };
+}
 
 class ChartMonitor extends Component {
   static update = reducer;
@@ -37,13 +52,17 @@ class ChartMonitor extends Component {
     theme: PropTypes.oneOfType([
       PropTypes.object,
       PropTypes.string
-    ])
+    ]),
+    invertTheme: PropTypes.bool,
+    hasImmutables: PropTypes.bool
   };
 
   static defaultProps = {
     select: (state) => state,
     theme: 'nicinabox',
-    preserveScrollTop: true
+    preserveScrollTop: true,
+    invertTheme: false,
+    hasImmutables: false
   };
 
   shouldComponentUpdate = shouldPureComponentUpdate;
@@ -78,17 +97,17 @@ class ChartMonitor extends Component {
   }
 
   getTheme() {
-    let { theme } = this.props;
+    let { theme, invertTheme } = this.props;
     if (typeof theme !== 'string') {
-      return theme;
+      return invertTheme ? invertColors(theme) : theme;
     }
 
     if (typeof themes[theme] !== 'undefined') {
-      return themes[theme];
+      return invertTheme ? invertColors(themes[theme]) : theme;
     }
 
     console.warn('DevTools theme ' + theme + ' not found, defaulting to nicinabox');
-    return themes.nicinabox;
+    return invertTheme ? invertColors(themes.nicinabox) : theme;
   }
 
   getChartStyle() {
@@ -115,7 +134,7 @@ class ChartMonitor extends Component {
   }
 
   getChartOptions(props = this.props) {
-    const { computedStates } = props;
+    const { computedStates, hasImmutables } = props;
 
     const tooltipOptions = {
       disabled: false,
@@ -129,8 +148,9 @@ class ChartMonitor extends Component {
       }
     };
 
+    let defaultState = computedStates[computedStates.length - 1].state;
     const defaultOptions = {
-      state: computedStates[computedStates.length - 1].state,
+      state: hasImmutables ? toMutable(defaultState) : defaultState,
       isSorted: false,
       heightBetweenNodesCoeff: 1,
       widthBetweenNodesCoeff: 1.3,

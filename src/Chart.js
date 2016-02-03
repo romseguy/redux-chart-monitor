@@ -1,7 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import { tree } from 'd3-state-visualizer';
-import toMutable from 'tomutable';
 
 const wrapperStyle = {
   width: '100%',
@@ -61,19 +60,15 @@ class Chart extends Component {
     })
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     const { select, state } = this.props;
     this.renderChart = tree(findDOMNode(this), this.props);
-    this.renderChart(select(toMutable(state)));
+    this.renderChart(select(state));
   }
 
   componentWillReceiveProps(nextProps) {
     const { state, select } = nextProps;
-    this.renderChart(select(toMutable(state)));
+    this.renderChart(select(state));
   }
 
   render() {
