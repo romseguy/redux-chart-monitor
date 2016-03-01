@@ -1,8 +1,10 @@
 Redux DevTools Chart Monitor
 =========================
 
-A chart monitor for [Redux DevTools](https://github.com/gaearon/redux-devtools).  
+A chart monitor for [Redux DevTools](https://github.com/gaearon/redux-devtools).
 It shows a real-time view of the store aka the current state of the app.
+
+:rocket: Now with immutable-js support.
 
 [Demo](http://romseguy.github.io/redux-store-visualizer/) [(Source)](https://github.com/romseguy/redux-store-visualizer)
 
@@ -32,7 +34,7 @@ export default createDevTools(
 
 Then you can render `<DevTools>` to any place inside app or even into a separate popup window.
 
-Alternative, you can use it together with [`DockMonitor`](https://github.com/gaearon/redux-devtools-dock-monitor) to make it dockable.  
+Alternative, you can use it together with [`DockMonitor`](https://github.com/gaearon/redux-devtools-dock-monitor) to make it dockable.
 Consult the [`DockMonitor` README](https://github.com/gaearon/redux-devtools-dock-monitor) for details of this approach.
 
 [Read how to start using Redux DevTools.](https://github.com/gaearon/redux-devtools)
@@ -102,7 +104,9 @@ Consult the [`DockMonitor` README](https://github.com/gaearon/redux-devtools-doc
 Name                  | Description
 -------------         | -------------
 `theme`               | Either a string referring to one of the themes provided by [redux-devtools-themes](https://github.com/gaearon/redux-devtools-themes) (feel free to contribute!) or a custom object of the same format. Optional. By default, set to [`'nicinabox'`](https://github.com/gaearon/redux-devtools-themes/blob/master/src/nicinabox.js).
+`invertTheme`         | Boolean value that will invert the colors of the selected theme. Optional. By default, set to `false`
 `select`              | A function that selects the slice of the state for DevTools to show. For example, `state => state.thePart.iCare.about`. Optional. By default, set to `state => state`.
+`hasImmutables`       | Boolean value that will walk state tree and convert immutable-js objects to normal objects so that they can be displayed. Optional. By default, set to `false`
 
 ### License
 

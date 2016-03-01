@@ -60,10 +60,6 @@ class Chart extends Component {
     })
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     const { select, state, defaultIsVisible } = this.props;
     this.renderChart = tree(findDOMNode(this), this.props);
