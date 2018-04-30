@@ -157,7 +157,8 @@ class ChartMonitor extends Component {
       style: this.getChartStyle()
     };
 
-    return deepmerge(defaultOptions, props);
+    const newProps = deepmerge(defaultOptions, props);
+    return newProps;
   }
 
   render() {

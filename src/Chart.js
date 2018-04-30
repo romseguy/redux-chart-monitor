@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { findDOMNode } from 'react-dom';
 import { tree } from 'd3-state-visualizer';
 
 const wrapperStyle = {
@@ -63,7 +62,7 @@ class Chart extends Component {
 
   componentDidMount() {
     const { select, state, defaultIsVisible } = this.props;
-    this.renderChart = tree(findDOMNode(this), this.props);
+    this.renderChart = tree(this.node, this.props);
     if (defaultIsVisible) {
       this.renderChart(select(state));
     }
@@ -78,7 +77,7 @@ class Chart extends Component {
   }
 
   render() {
-    return <div style={wrapperStyle}/>;
+    return <div ref={node => this.node = node} style={wrapperStyle}/>;
   }
 }
 
