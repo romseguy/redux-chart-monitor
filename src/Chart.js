@@ -69,10 +69,10 @@ class Chart extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { state, select, monitorState } = nextProps;
+    const { state, select, monitorState, diffedStates } = nextProps;
 
     if (monitorState.isVisible !== false) {
-      this.renderChart(select(state));
+      this.renderChart(select(state), { diffedStates });
     }
   }
 
