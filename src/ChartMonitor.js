@@ -4,9 +4,12 @@ import shouldPureComponentUpdate from 'react-pure-render/function';
 import * as themes from 'redux-devtools-themes';
 import { ActionCreators } from 'redux-devtools';
 import deepmerge from 'deepmerge';
+import deep from 'deep-diff';
+import Immutable from 'immutable';
 
 import reducer from './reducers';
 import Chart from './Chart';
+
 const { reset, rollback, commit, sweep, toggleAction } = ActionCreators;
 
 const styles = {
@@ -34,6 +37,24 @@ function invertColors(theme) {
   };
 }
 
+function getStateDifference(computedStates, index) {
+  if (index !== 0 && computedStates[index]) {
+    const newState = Immutable.fromJS({
+      state: computedStates[index].state
+    }).toJS().state;
+
+    const oldState = Immutable.fromJS({
+      state: computedStates[index - 1].state
+    }).toJS().state;
+
+    const diff = deep.diff(oldState, newState);
+
+    return diff || [];
+  }
+  return [];
+}
+
+
 class ChartMonitor extends Component {
   static update = reducer;
 
@@ -54,13 +75,15 @@ class ChartMonitor extends Component {
       PropTypes.object,
       PropTypes.string
     ]),
-    invertTheme: PropTypes.bool
+    invertTheme: PropTypes.bool,
+    diffStates: PropTypes.bool
   };
 
   static defaultProps = {
     select: (state) => state,
     theme: 'nicinabox',
     preserveScrollTop: true,
+    diffStates: false,
     invertTheme: false
   };
 
@@ -133,7 +156,7 @@ class ChartMonitor extends Component {
   }
 
   getChartOptions(props = this.props) {
-    const { computedStates } = props;
+    const { computedStates, currentStateIndex } = props;
     const theme = this.getTheme();
 
     const tooltipOptions = {
@@ -147,9 +170,8 @@ class ChartMonitor extends Component {
         'padding': '5px'
       }
     };
-
     const defaultOptions = {
-      state: computedStates.length ? computedStates[props.currentStateIndex].state : null,
+      state: computedStates.length ? computedStates[currentStateIndex].state : null,
       isSorted: false,
       heightBetweenNodesCoeff: 1,
       widthBetweenNodesCoeff: 1.3,
@@ -157,7 +179,11 @@ class ChartMonitor extends Component {
       style: this.getChartStyle()
     };
 
-    return deepmerge(defaultOptions, props);
+    const newProps = deepmerge(defaultOptions, props);
+    if (newProps.diffStates) {
+      newProps.diffedStates = getStateDifference(computedStates, currentStateIndex);
+    }
+    return newProps;
   }
 
   render() {
